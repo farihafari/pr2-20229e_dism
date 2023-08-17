@@ -37,24 +37,36 @@ include("header.php");
                             }
 
                             if(isset($_POST["update_cat"])){
+                                
                                 $cname= $_POST["cat_name"];
-                                $filename = $_FILES["cat_file"]["name"];
-                                $tmpname= $_FILES["cat_file"]['tmp_name'];
-                                $extension = pathinfo($filename,PATHINFO_EXTENSION);
-                                $destination = "img/" . $filename;
-                                if($extension=="jpg" || $extension=="png" ||$extension=="jpeg" || $extension=="webp" ){
-if(move_uploaded_file($tmpname,$destination)){
-    $query=$pdo->prepare("update category  set name =:cname, image=:cimg where id =:pid");
-    $query->bindParam("pid",$cid);
-    $query->bindParam("cname",$cname);
-    $query->bindParam("cimg",$filename);
-    $query->execute();
-    echo "
-    <script>alert('update category successfully')</script>
-    ";
-
-}
+                                if(!empty($_FILES["cat_file"]["name"])){
+                                    $filename = $_FILES["cat_file"]["name"];
+                                    $tmpname= $_FILES["cat_file"]['tmp_name'];
+                                    $extension = pathinfo($filename,PATHINFO_EXTENSION);
+                                    $destination = "img/" . $filename;
+                                    if($extension=="jpg" || $extension=="png" ||$extension=="jpeg" || $extension=="webp" ){
+    if(move_uploaded_file($tmpname,$destination)){
+        $query=$pdo->prepare("update category  set name =:cname, image=:cimg where id =:pid");
+        $query->bindParam("pid",$cid);
+        $query->bindParam("cname",$cname);
+        $query->bindParam("cimg",$filename);
+        $query->execute();
+        echo "
+        <script>alert('update category successfully with image')</script>
+        ";
+    
+    }
+                                    }
+                                }else{
+                                    $query=$pdo->prepare("update category  set name =:cname where id =:pid");
+                                    $query->bindParam("pid",$cid);
+                                    $query->bindParam("cname",$cname);
+                                    $query->execute();
+                                    echo "
+                                    <script>alert('update category successfully without image')</script>
+                                    "; 
                                 }
+
                             }
                             ?>
         </div>
