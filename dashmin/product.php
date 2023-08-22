@@ -11,7 +11,7 @@ include("header.php");
                  
                             <form method="post" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">category name</label>
+                                    <label for="exampleInputEmail1" class="form-label">product name</label>
                                     <input type="text" class="form-control" name="pro_name" id="exampleInputEmail1"
                                         aria-describedby="emailHelp">
                                     <div id="emailHelp" class="form-text">ADD UNIQUE CATEGORY.
@@ -38,7 +38,7 @@ include("header.php");
                                     $data = $query->fetchAll(PDO::FETCH_ASSOC);
                                     foreach($data as $cat_type){
                                         ?>
-                                    <option selected value="<?php echo $cat_type['name'] ?>"><?php echo $cat_type['name'] ?></option>
+                                    <option selected value="<?php echo $cat_type['id'] ?>"><?php echo $cat_type['name'] ?></option>
                                     <?php
                                     }
                                     ?>
@@ -55,7 +55,45 @@ include("header.php");
         </div>
             <!-- Blank End -->
 
+<?php
 
+if(isset($_POST['product_add'])){
+$pname=$_POST['pro_name'];
+$pQty=$_POST['pro_qty'];
+$pPrice=$_POST['pro_price'];
+$pCatTypeId=$_POST['cat_type'];
+$checkpro = $pdo->prepare("select * from product where product_name=:pname");
+$checkpro->bindParam("pname",$pname);
+$checkpro->execute();
+$count= $checkpro->fetchColumn();
+if($count>0){
+    echo "<script>
+    alert('already exist')
+    </script>";
+}else{
+$pImgName=$_FILES['pro_img']['name'];
+$pTmpName=$_FILES['pro_img']['tmp_name'];
+$pSize=$_FILES['pro_img']['size'];
+$extension =pathinfo($pImgName,PATHINFO_EXTENSION);
+$destination="img/".$pImgName;
+if($extension=="png"|| $extension=="jpg"|| $extension=="jpeg"||$extension=="webp"){
+    if(move_uploaded_file($pTmpName,$destination)){
+       $query=$pdo->prepare("insert into product (product_name,product_qty,product_price,category_type_id,product_image )values (:pname,:pqty,:pprice,:pcatid,:pimg)");
+       $query->bindParam("pname",$pname);
+       $query->bindParam("pqty",$pQty);
+       $query->bindParam("pprice",$pPrice);
+       $query->bindParam("pcatid",$pCatTypeId);
+       $query->bindParam("pimg",$pImgName);
+       $query->execute();
+       echo "<script>alert('product add successfully')</script>";
+
+       
+    }
+}
+}
+}
+?>
            <?php
+
            include("footer.php")
            ?>
