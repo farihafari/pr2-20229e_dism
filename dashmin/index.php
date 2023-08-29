@@ -6,6 +6,7 @@ echo"
 <script>location.assign('signin.php')</script>
 ";
 }
+if($_SESSION['uemail'] && $_SESSION['urole']=="admin"){
 ?>
 
             <!-- Sale & Revenue Start -->
@@ -15,8 +16,19 @@ echo"
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-line fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Total users</p>
+                                <h6 class="mb-0">
+                                    <?php
+                                    $query=$pdo->query("select * from user");
+                                    $all = $query->fetchAll(PDO::FETCH_ASSOC);
+                                    $count=0;
+                                    foreach($all as $user){
+                                        $count++;
+                                    }
+                                    echo $count;
+                                    ?>
+
+                                </h6>
                             </div>
                         </div>
                     </div>
@@ -24,8 +36,15 @@ echo"
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Total Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Total product</p>
+                                <h6 class="mb-0">
+<?php
+$query=$pdo->query("SELECT COUNT(*) as total_count from product");
+$tcount=$query->fetch(PDO::FETCH_ASSOC);
+echo $tcount['total_count'];
+?>
+
+                                </h6>
                             </div>
                         </div>
                     </div>
@@ -33,8 +52,15 @@ echo"
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-area fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Total selling amount</p>
+                                <h6 class="mb-0">
+
+                                <?php
+                                $query = $pdo->query("select sum(product_qty*product_price) as total_pro from product");
+                                $res = $query->fetch(PDO::FETCH_ASSOC);
+                                echo $res['total_pro'];
+                                ?>
+                                </h6>
                             </div>
                         </div>
                     </div>
@@ -54,6 +80,7 @@ echo"
 
             <!-- Sales Chart Start -->
             <div class="container-fluid pt-4 px-4">
+                <h1 class="text-center text-info">admin dashboard</h1>
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light text-center rounded p-4">
@@ -76,13 +103,15 @@ echo"
                 </div>
             </div>
             <!-- Sales Chart End -->
-
+            <?php
+}elseif($_SESSION["uemail"] && $_SESSION['urole']=="user"){
+?>
 
             <!-- Recent Sales Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Recent Salse</h6>
+                        <h6 class="mb-0">user dashboard</h6>
                         <a href="">Show All</a>
                     </div>
                     <div class="table-responsive">
@@ -272,6 +301,9 @@ echo"
                 </div>
             </div>
             <!-- Widgets End -->
+            <?php
+}
+?>
 
 
  <?php

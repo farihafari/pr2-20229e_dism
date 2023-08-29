@@ -30,6 +30,7 @@ if(isset($_POST['sign_in'])){
     $final = $query->fetch(PDO::FETCH_ASSOC);
     if($final){
         $_SESSION['uemail']=$final['email'];
+        $_SESSION['urole']=$final['role'];
         echo"<script>
         alert('logged in successfully');
         location.assign('index.php');
