@@ -1,4 +1,6 @@
-
+<?php
+include("connection.php")
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +37,25 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
+<script>
+	$(document).ready(function(){
+		$("#search").on("keyup",function(){
+			let search= $("#search").val();
+			$.ajax({
+				url:"query.php",
+				type:"post",
+				data:{"search":search},
+				success:function(res){
+
+					$("#loadproduct").html(res);
+				}
+
+			})
+		})
+	})
+</script>
 <body class="animsition">
 	
 	<!-- Header -->
@@ -241,7 +261,7 @@
 					<button class="flex-c-m trans-04">
 						<i class="zmdi zmdi-search"></i>
 					</button>
-					<input class="plh3" type="text" name="search" placeholder="Search...">
+					<input class="plh3" type="text" name="search"  id="search" placeholder="Search...">
 				</form>
 			</div>
 		</div>
