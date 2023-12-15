@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2023 at 01:51 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Generation Time: Dec 15, 2023 at 12:40 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,6 +46,28 @@ INSERT INTO `category` (`id`, `name`, `image`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `invoiceID` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `user_name` varchar(200) NOT NULL,
+  `total_products_count` int(11) NOT NULL,
+  `sum_of_total_products` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`invoiceID`, `user_id`, `user_name`, `total_products_count`, `sum_of_total_products`) VALUES
+(1, 3, 'aqsa', 2, 102490),
+(2, 1, 'fariha', 3, 228470);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -66,7 +88,36 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `user_name`, `pro_id`, `pro_name`, `pro_qty`, `pro_price`, `dateoforderplace`, `status`) VALUES
-(1, 1, 'fariha', 1, 'infinix hot 10', 2, 54500, '2023-09-14 05:00:53', 'pending');
+(1, 1, 'fariha', 1, 'infinix hot 10', 2, 54500, '2023-09-14 05:00:53', 'pending'),
+(2, 1, 'fariha', 2, 'rolex ', 2, 50000, '2023-12-15 04:07:20', 'pending'),
+(3, 1, 'fariha', 3, 'purse', 1, 2490, '2023-12-15 04:07:20', 'pending'),
+(4, 1, 'fariha', 2, 'rolex ', 2, 50000, '2023-12-15 04:11:38', 'pending'),
+(5, 1, 'fariha', 4, 'JUICCE', 1, 3000, '2023-12-15 04:11:38', 'pending'),
+(6, 1, 'fariha', 2, 'rolex ', 2, 50000, '2023-12-15 04:12:10', 'pending'),
+(7, 1, 'fariha', 4, 'JUICCE', 1, 3000, '2023-12-15 04:12:10', 'pending'),
+(8, 1, 'fariha', 2, 'rolex ', 2, 50000, '2023-12-15 04:18:26', 'pending'),
+(9, 1, 'fariha', 4, 'JUICCE', 2, 3000, '2023-12-15 04:18:26', 'pending'),
+(10, 1, 'fariha', 2, 'rolex ', 2, 50000, '2023-12-15 04:18:44', 'pending'),
+(11, 1, 'fariha', 4, 'JUICCE', 2, 3000, '2023-12-15 04:18:44', 'pending'),
+(12, 3, 'aqsa', 2, 'rolex ', 2, 50000, '2023-12-15 04:20:31', 'pending'),
+(13, 3, 'aqsa', 3, 'purse', 1, 2490, '2023-12-15 04:20:31', 'pending'),
+(14, 3, 'aqsa', 2, 'rolex ', 2, 50000, '2023-12-15 04:21:15', 'pending'),
+(15, 3, 'aqsa', 3, 'purse', 1, 2490, '2023-12-15 04:21:15', 'pending'),
+(16, 3, 'aqsa', 2, 'rolex ', 2, 50000, '2023-12-15 04:21:58', 'pending'),
+(17, 3, 'aqsa', 3, 'purse', 1, 2490, '2023-12-15 04:21:58', 'pending'),
+(18, 3, 'aqsa', 2, 'rolex ', 2, 50000, '2023-12-15 04:22:01', 'pending'),
+(19, 3, 'aqsa', 3, 'purse', 1, 2490, '2023-12-15 04:22:01', 'pending'),
+(20, 3, 'aqsa', 2, 'rolex ', 2, 50000, '2023-12-15 04:22:36', 'pending'),
+(21, 3, 'aqsa', 3, 'purse', 1, 2490, '2023-12-15 04:22:36', 'pending'),
+(22, 3, 'aqsa', 2, 'rolex ', 2, 50000, '2023-12-15 04:22:41', 'pending'),
+(23, 3, 'aqsa', 3, 'purse', 1, 2490, '2023-12-15 04:22:41', 'pending'),
+(24, 3, 'aqsa', 2, 'rolex ', 2, 50000, '2023-12-15 04:22:43', 'pending'),
+(25, 3, 'aqsa', 3, 'purse', 1, 2490, '2023-12-15 04:22:43', 'pending'),
+(26, 3, 'aqsa', 2, 'rolex ', 2, 50000, '2023-12-15 04:23:32', 'pending'),
+(27, 3, 'aqsa', 3, 'purse', 1, 2490, '2023-12-15 04:23:32', 'pending'),
+(28, 1, 'fariha', 3, 'purse', 3, 2490, '2023-12-15 04:27:20', 'pending'),
+(29, 1, 'fariha', 1, 'infinix hot 10', 4, 54500, '2023-12-15 04:27:20', 'pending'),
+(30, 1, 'fariha', 4, 'JUICCE', 1, 3000, '2023-12-15 04:27:20', 'pending');
 
 -- --------------------------------------------------------
 
@@ -113,7 +164,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `role`) VALUES
 (1, 'fariha', 'fari@gmail.com', '123', 'user'),
-(2, 'admin', 'admin@gmail.com', 'admin123', 'admin');
+(2, 'admin', 'admin@gmail.com', 'admin123', 'admin'),
+(3, 'aqsa', 'a@gmail.com', '123', 'user');
 
 --
 -- Indexes for dumped tables
@@ -124,6 +176,12 @@ INSERT INTO `user` (`id`, `name`, `email`, `password`, `role`) VALUES
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`invoiceID`);
 
 --
 -- Indexes for table `orders`
@@ -155,10 +213,16 @@ ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `invoice`
+--
+ALTER TABLE `invoice`
+  MODIFY `invoiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -170,7 +234,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
