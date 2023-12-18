@@ -127,11 +127,17 @@ include("connection.php")
 							<li>
 								<a href="contact.html">Contact</a>
 							</li>
+							<li>
+								<a href="login.php">log in</a>
+							</li>
 							<?php
 							if (isset($_SESSION['useremail'])) {
 								?>
 								<li>
 									<a href="logout.php">logout</a>
+								</li>
+								<li>
+									<a href="slip.php">orders</a>
 								</li>
 								<?php
 							}
